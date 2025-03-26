@@ -6,7 +6,7 @@
     <title>Document</title>
   </head>
     <h1>Result</h1>
-    <a href="{% url 'index' %}">시작 페이지로 이동</a>
+    <a href="{% url 'wordcount:index' %}">시작 페이지로 이동</a>
 
     <h1>
       당신이 입력한 텍스트는
@@ -37,6 +37,6 @@
     {{count_no_space}}자
     <br/>
 
-    <a href="{% url 'word_count' %}">다시하기</a>
+    <a href="{% url 'wordcount:word_count' %}">다시하기</a>
   </body>
 </html>

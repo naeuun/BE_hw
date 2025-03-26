@@ -11,11 +11,11 @@
     <h1>스터디 과제</h1>
     <h3>이름을 적어보세요!</h3>
 
-    <form action="{% url 'hello' %}">
+    <form action="{% url 'wordcount:hello' %}">
       <textarea name="name" cols="30" rows="2"></textarea>
       <input type="submit" value="확인" />
     </form>
 
-    <a href="{% url 'word_count' %}">word_count 하러 가기</a>
+    <a href="{% url 'wordcount:word_count' %}">word_count 하러 가기</a>
   </body>
 </html>

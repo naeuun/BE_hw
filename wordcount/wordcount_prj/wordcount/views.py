@@ -3,18 +3,20 @@ from django.shortcuts import render
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'wordcount/index.html')
 
 def word_count(request):
-    return render(request, 'word_count.html')
+    return render(request, 'wordcount/word_count.html')
 
 def hello(request):
     name=request.GET['name']
-    return render(request, 'hello.html',{'name':name})
+    return render(request, 'wordcount/hello.html',{'name':name})
 
 
 def result(request):
     entered_text=request.GET['fulltext']
+    
+    
     word_list=entered_text.split()
 
     count_all_words=len(word_list) # split 된 word_list 이용해서 단어 수 세기 
@@ -37,6 +39,6 @@ def result(request):
         if count==max_count:
             max_count_words.append(word) 
             
-    return render(request, 'result.html',{'alltext':entered_text, 'dictionary':word_dictionary.items(),
+    return render(request, 'wordcount/result.html',{'alltext':entered_text, 'dictionary':word_dictionary.items(),
                                           'count_all_words':count_all_words,'count_text':count_text,
                                           'count_no_space':count_no_space, 'max_count_words':max_count_words, 'max_count':max_count})

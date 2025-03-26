@@ -7,9 +7,9 @@
   </head>
   <body>
     <h1>Word Count</h1>
-    <a href="{% url 'index' %}">시작 페이지로 이동</a>
+    <a href="{% url 'wordcount:index' %}">시작 페이지로 이동</a>
 
-    <form action="{% url 'result' %}">
+    <form action="{% url 'wordcount:result' %}">
       <textarea name="fulltext" cols="40" rows="20"></textarea>
       <br />
       <input type="submit" value="Count!" />
