@@ -11,9 +11,9 @@
     <h1>스터디 과제</h1>
     <h3>이름을 적어보세요!</h3>
 
-    <form action="{% url 'wordcount:hello' %}">
-      <textarea name="name" cols="30" rows="2"></textarea>
-      <input type="submit" value="확인" />
+    <form action="{% url 'wordcount:hello' %}" method="get">
+      <input type="text" name="name" required />
+      <button type="submit">확인</button>
     </form>
 
     <a href="{% url 'wordcount:word_count' %}">word_count 하러 가기</a>
