@@ -17,14 +17,14 @@ def password_generator(request):
     special = "special" in request.GET
     
     #길이가 입력되지 않았을 경우, error1.html 렌더링 
-    if len=="": 
+    if not len: 
         return render(request, 'password/error1.html')
     
     #길이가 입력되었을 경우, 정수형태로 바꿔줌
-    len=int(len)
+    pwd_length=int(len)
     
     #입력된 길이가 음수이 경우, error2. html 렌더링 
-    if len<0: 
+    if pwd_length<0: 
         return render(request, 'password/error2.html')
     
     #체크박스를 모두 선택하지 않았을 경우, error3.html 렌더링 
@@ -45,7 +45,7 @@ def password_generator(request):
     
     #random.choices 이용하여 k값을 받아온 문자열 길이로 지정해주고, 
     #join을 이용해 문자열을 결합함 (앞의 세퍼레이터를 ""로 주면 이어지게 결합할 수 있음)
-    password="".join(random.choices(check_chars, k=len))
+    password="".join(random.choices(check_chars, k=pwd_length))
 
     #변수가 하나밖에 없긴 하지만, 스터디에서 배웠으니 context로 뺐음!
     context={
