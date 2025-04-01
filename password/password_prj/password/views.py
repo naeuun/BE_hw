@@ -10,18 +10,18 @@ def index(request):
     return render(request, 'password/index.html')
 
 def password_generator(request):
-    len=request.GET.get('len')
+    pwd_length_str=request.GET.get('len')
     upper = "upper" in request.GET 
     lower = "lower" in request.GET
     digits = "digits" in request.GET
     special = "special" in request.GET
     
     #길이가 입력되지 않았을 경우, error1.html 렌더링 
-    if not len: 
+    if not pwd_length_str: 
         return render(request, 'password/error1.html')
     
     #길이가 입력되었을 경우, 정수형태로 바꿔줌
-    pwd_length=int(len)
+    pwd_length=int(pwd_length)
     
     #입력된 길이가 음수이 경우, error2. html 렌더링 
     if pwd_length<0: 
