@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="{% url 'phone:result' %}" method="GET">
+      <input type="text" name="keyword" />
+      <button type="submit">검색</button>
+    </form>
+    <hr />
+
+    {% for phone in phones %}
+    <h2>이름 : {{ phone.name }}</h2>
+    <p>전화번호 : {{ phone.phone_num }}</p>
+    <hr />
+    {% endfor %}
+  </body>
+</html>
