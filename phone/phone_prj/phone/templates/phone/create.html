@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>연락처 등록</h1>
+    <form method="POST" action="{% url 'phone:create' %}">
+        {% csrf_token %}
+        이름 : <input type="text" name="name"><br>
+        번호 : <input type="text" name="phone_num"><br>
+        이메일 : <input type="text" name="email"><br>
+        <button type="submit">등록</button>
+    </form>
+</body>
+</html>

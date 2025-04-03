@@ -9,11 +9,12 @@
     <h1>"{{ keyword }}" 검색 결과 페이지 입니다.</h1>
 
     {% for phone in phones %}
-    <h2>이름 : {{ phone.name }}</h2>
-    <p>전화번호 : {{ phone.phone_num }}</p>
+    <a href="{% url 'phone:detail' phone.id %}">{{ phone.name }}</a>
+    {{ phone.phone_num }}
     <hr />
     {% empty %} 해당 검색어와 관련된 전화번호가 없습니다. <br />
     {% endfor %}
+    <a href="{% url 'phone:list' %}">연락처 목록으로 돌아가기</a>
 
   </body>
 </html>

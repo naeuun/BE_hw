@@ -6,6 +6,9 @@
     <title>Document</title>
   </head>
   <body>
+    <h1> 연락처 </h1>
+    <br>
+
     <form action="{% url 'phone:result' %}" method="GET">
       <input type="text" name="keyword" />
       <button type="submit">검색</button>
@@ -13,9 +16,18 @@
     <hr />
 
     {% for phone in phones %}
-    <h2>이름 : {{ phone.name }}</h2>
-    <p>전화번호 : {{ phone.phone_num }}</p>
+    <a href="{% url 'phone:detail' phone.id %}">{{ phone.name }}</a> 
+    {{ phone.phone_num }}
+    <a href="{% url 'phone:update' phone.id %}">수정</a>
+    <a href="{% url 'phone:delete' phone.id %}">삭제</a>
     <hr />
+    {% empty %}
+      등록된 연락처가 없습니다. <hr>
     {% endfor %}
+
+    <br>
+
+    <a href="{% url 'phone:create' %}">새 번호 등록</a>
+
   </body>
 </html>
