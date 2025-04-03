@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView
 from .models import Phone
 
-def list(request):
-    phones = Phone.objects.all().order_by('name')
-    return render(request, 'phone/list.html', {'phones' : phones})
+
+class IndexView(ListView):
+    queryset=Phone.objects.all().order_by('name')
+    template_name = 'phone/list.html'
+    context_object_name = 'phones'
 
 def result(request):
     keyword = request.GET.get('keyword')
