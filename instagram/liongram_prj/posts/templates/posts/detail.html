@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3> 제목 -  {{post.title}}</h3>
+    <p>내용 - {{post.content}}</p>
+    <p>조회수 - {{post.views}}</p>
+    <p>작성일 - {{post.created_at}}</p>
+    <hr>
+    <br>
+    <a href="{% url 'posts:update' post.id %}">수정하기</a><br>
+    <a href="{% url 'posts:delete' post.id %}">삭제하기</a><br><br>
+    <a href="{% url 'posts:list' %}">돌아가기</a>
+</body>
+</html>

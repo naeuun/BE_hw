@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>글 작성</h3>
+    <form method="POST" action="{% url 'posts:create' %}">
+        {% csrf_token %}
+        제목 - 
+        <input type="text" name="title" placeholder="제목 작성">
+        <br><br>
+        내용 - 
+        <textarea type="text" name="content" placeholder="내용입니다."></textarea>
+        <br><br>
+        <button type="submit">작성하기</button>
+    </form>
+</body>
+</html>
