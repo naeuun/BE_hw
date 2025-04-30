@@ -6,8 +6,19 @@
     <title>Document</title>
   </head>
   <body>
+    {% if request.user.is_authenticated %}
+      {{ request.user.username }}님 환영합니다. <br>
+      <a href="{% url 'accounts:logout' %}">로그아웃</a>
+      <a href="{% url 'accounts:mypage' %}">마이페이지</a><br>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">로그인</a>
+      <a href="{% url 'accounts:signup' %}">회원가입</a>
+    {% endif %}
+    <br>
+
+
     <a href="{% url 'blog:create' %}">글 작성하기</a>
-    <hr />
+    <hr>
 
     {% for post in posts %}
 
