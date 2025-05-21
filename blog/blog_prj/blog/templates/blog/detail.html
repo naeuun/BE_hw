@@ -9,9 +9,25 @@
     <h2>제목 - {{ post.title }}</h2>
     <p>내용 - {{ post.content }}</p>
     <p>작성일 - {{ post.created_at }}</p>
+    <p>작성자 - {{ post.author.nickname }}</p>
     <hr />
     <br />
+    {% if request.user == post.author %}
     <a href="{% url 'blog:update' post.id %}">수정하기</a>
     <a href="{% url 'blog:delete' post.id %}">삭제하기</a>
+    {% endif %}
+
+    <p>댓글 수 : {{post.comments.count }}</p>
+    {% for comment in post.comments.all %}
+      <p>{{ comment.author.nickname }} : {{ comment.content }}</p>
+    {% empty %}
+      댓글이 없습니다. 
+    {% endfor %}
+
+    <form method ="POST" action="{% url 'blog:create-comment' post.id %}">
+      {% csrf_token %}
+      <textarea name="content" cols="10" rows="5"></textarea>
+      <button type="submit">댓글 작성</button><br>
+    </form>
   </body>
 </html>

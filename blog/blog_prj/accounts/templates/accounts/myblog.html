@@ -7,9 +7,12 @@
 </head>
 <body>
     <a href="{% url 'blog:list' %}">홈으로</a>
+    <h2>내가 작성한 블로그</h2>
 
-    <h2>마이페이지</h2>
-    <a href="{% url 'accounts:user-info' %}">내 정보 보기</a><br>
-    <a href="{% url 'accounts:myblog' %}">내가 작성한 블로그 보기</a><br>
+    {% for post in posts %}
+    <h2>{{post.title}}</h2>
+    <p>{{post.content}}</p>
+    <p>{{post.author.nickname}}</p>
+    {% empty %} 글이 없습니다. {% endfor %}
 </body>
 </html>
