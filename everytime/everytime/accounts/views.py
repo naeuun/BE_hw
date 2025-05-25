@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import *
+from posts.models import Post
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -39,3 +40,7 @@ def mypage(request):
 
 def user_info(request):
     return render(request, 'accounts/user_info.html')
+
+def mypost(reqeust):
+    posts = Post.objects.filter(author=reqeust.user)
+    return render(reqeust, 'accounts/mypost.html', {'posts':posts})
