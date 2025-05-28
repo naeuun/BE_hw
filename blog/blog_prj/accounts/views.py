@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect 
 from .forms import *
-from blog.models import Post #Post 모델을 추가해줘야함! 
+from blog.models import *
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -43,3 +43,9 @@ def myblog(request):
     #posts = request.user.posts.all().order_by('-id') 정참조 방식 
     posts = Post.objects.filter(author=request.user).order_by('-id') #filter메소드 사용 
     return render(request, 'accounts/myblog.html', {'posts': posts})
+
+def mylike(request):
+    posts = Post.objects.all().order_by('-id')
+    liked_posts = [post for post in posts if request.user in post.like.all()]
+    # 역참조 코드 : liked_posts = request.user.like_posts.all().order_by('-id')
+    return render(request, 'accounts/mylike.html', {'liked_posts': liked_posts})

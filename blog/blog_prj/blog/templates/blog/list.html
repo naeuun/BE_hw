@@ -15,7 +15,18 @@
       <a href="{% url 'accounts:signup' %}">회원가입</a>
     {% endif %}
     <br>
+    <br>
 
+    <form method="GET" action="{% url 'blog:list' %}">
+      <select name="category">
+        <option value="">모든 카테고리</option>
+        {% for category in categories %}
+        <option value="{{category.id}}">{{category.name}}</option>
+        {% endfor %}
+      </select>
+      <input type="submit" value="조회" />
+    </form>
+    
 
     <a href="{% url 'blog:create' %}">글 작성하기</a>
     <hr>

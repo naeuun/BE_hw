@@ -1,17 +1,31 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Comment
+from .models import Post, Comment, Category
+from users.models import *
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def list(request):
-    posts=Post.objects.all().order_by('-id') # id를 역순으로 정렬 (최신글부터 볼 수 있게 됨됨)
-    return render(request, 'blog/list.html', {'posts' : posts })
+    categories = Category.objects.all()
+    category_id = request.GET.get('category')
+    
+    if category_id:
+        category = get_object_or_404(Category, id=category_id)
+        posts = Post.objects.filter(category=category).order_by('-id')
+        #posts = category.posts.all().order_by('-id')
+    else:
+        posts=Post.objects.all().order_by('-id') # id를 역순으로 정렬 (최신글부터 볼 수 있게 됨)
+    return render(request, 'blog/list.html', {'posts' : posts , 'categories' : categories})
 
 @login_required
 def create(request):
+    categories = Category.objects.all()
+    
     if request.method == "POST":
         title = request.POST.get('title')
         content = request.POST.get('content')
+        
+        category_ids = request.POST.getlist('category')
+        category_list = [get_object_or_404(Category, id = category_id) for category_id in category_ids]
         
         post = Post.objects.create(
             title = title,
@@ -19,8 +33,12 @@ def create(request):
             author = request.user
         )
         
+        for category in category_list:
+            post.category.add(category)
+        
+        
         return redirect('blog:list')
-    return render(request, 'blog/create.html')
+    return render(request, 'blog/create.html', {'categories':categories})
 
 def detail(request, id):
     post=get_object_or_404(Post, id=id)
@@ -54,3 +72,14 @@ def create_comment(request, post_id):
         )
         return redirect('blog:detail', post_id)
     return redirect('blog:list')
+
+@login_required
+def like(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    user = request.user
+    
+    if post in user.like_posts.all(): #정참조 코드 : if user in post.like.all()
+        post.like.remove(user)
+    else:
+        post.like.add(user)
+    return redirect('blog:detail', post_id)
