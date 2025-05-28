@@ -11,7 +11,7 @@ def list(request):
     if category_id:
         category = get_object_or_404(Category, id=category_id)
         posts = Post.objects.filter(category=category).order_by('-id')
-        #posts = category.posts.all().order_by('-id')
+        # 원래 코드 : posts = category.posts.all().order_by('-id')
     else:
         posts=Post.objects.all().order_by('-id') # id를 역순으로 정렬 (최신글부터 볼 수 있게 됨)
     return render(request, 'blog/list.html', {'posts' : posts , 'categories' : categories})

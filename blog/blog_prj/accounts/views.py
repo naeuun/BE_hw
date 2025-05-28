@@ -45,7 +45,8 @@ def myblog(request):
     return render(request, 'accounts/myblog.html', {'posts': posts})
 
 def mylike(request):
-    posts = Post.objects.all().order_by('-id')
-    liked_posts = [post for post in posts if request.user in post.like.all()]
+    # posts = Post.objects.all().order_by('-id')
+    #liked_posts = [post for post in posts if request.user in post.like.all()]
     # 역참조 코드 : liked_posts = request.user.like_posts.all().order_by('-id')
+    liked_posts = Post.objects.filter(like=request.user).order_by('-id')
     return render(request, 'accounts/mylike.html', {'liked_posts': liked_posts})
