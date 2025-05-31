@@ -16,7 +16,7 @@
     <h3>{{post.title}}</h3><br>
     <h4>{{ post.content }}</h4><br><br>
     <h4>{{ post.created_at }}</h4>
-    {% if post.is_anonymous %} <!--True를 안 붙여도 된다?-->
+    {% if post.is_anonymous %} 
         <h5>익명</h5>
     {% else %}
         <h5>{{ post.author }}</h5>
@@ -26,6 +26,26 @@
         <a href="{% url 'posts:update' post.id %}">수정하기</a>
         <a href="{% url 'posts:delete' post.id %}">삭제하기</a>
     {% endif %}
+
+    <p>공감 {{ post.like.count }}개 | 스크랩 {{ post.scrap.count }}</p>
+
+    <form method="POST" action="{% url 'posts:like' post.id %}" style="display:inline"> <!-- 어떻게 나란히..??-->
+        {% csrf_token %}
+        {% if request.user in post.like.all %}
+            <button type="submit">공감 취소</button>
+        {% else %} 
+            <button type="submit">공감</button>
+        {% endif %}
+    </form>
+
+    <form method="POST" action="{% url 'posts:scrap' post.id %}" style="display:inline">
+        {% csrf_token %}
+        {% if request.user in post.scrap.all %}
+            <button type="submit">스크랩 취소</button>
+        {% else %}
+            <button type="submit">스크랩</button>
+        {% endif %}
+    </form>
 
     <hr>
     <h3>댓글</h3>

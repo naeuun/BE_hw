@@ -4,22 +4,10 @@ from django.contrib.auth.decorators import login_required
 
 
 def main(request):
-    posts = Post.objects.all().order_by('-id')
-    
-    if request.method == "POST":
-        title = request.POST.get('title')
-        content = request.POST.get('content')
-        is_anonymous = request.POST.get('is_anonymous') == 'on'
-        
-        post = Post.objects.create(
-            title = title,
-            content = content,
-            is_anonymous = is_anonymous,
-            author=request.user
-        )
-        return redirect('posts:main')
-    
-    return render(request, 'posts/main.html', {'posts' : posts})
+    categories = Category.objects.all()
+    category_posts = [ (category, category.posts.all().order_by('-id')[:4]) for category in categories]
+
+    return render(request, 'posts/main.html', {'categories':categories, 'category_posts':category_posts})
 
 def detail(request, id):
     post = get_object_or_404(Post, id=id)
@@ -62,3 +50,46 @@ def delete_comment(reqeust, id):
     comment.delete()
     post_id= comment.post.id
     return redirect('posts:detail', post_id)
+
+def category(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    posts = category.posts.all().order_by('-id')
+    
+    if request.method == "POST":
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        is_anonymous = request.POST.get('is_anonymous') == 'on'
+        
+        post = Post.objects.create(
+            title = title,
+            content = content,
+            is_anonymous = is_anonymous,
+            author=request.user
+        )
+        
+        post.category.add(category)
+        
+        return redirect('posts:category', slug)
+    return render(request, 'posts/category.html', {'posts':posts, 'category':category})
+    
+def like(request, post_id): 
+    if request.method =="POST":
+        post = get_object_or_404(Post, id=post_id)
+        user = request.user
+            
+        if user in post.like.all():
+            post.like.remove(user)
+        else:
+            post.like.add(user)
+        return redirect('posts:detail', post_id)
+    
+def scrap(request, post_id): 
+    if request.method =="POST":
+        post = get_object_or_404(Post, id=post_id)
+        user = request.user
+            
+        if user in post.scrap.all():
+            post.scrap.remove(user)
+        else:
+            post.scrap.add(user)
+        return redirect('posts:detail', post_id)

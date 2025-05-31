@@ -44,3 +44,7 @@ def user_info(request):
 def mypost(reqeust):
     posts = Post.objects.filter(author=reqeust.user)
     return render(reqeust, 'accounts/mypost.html', {'posts':posts})
+
+def myscrap(request):
+    scrap_posts = request.user.scrap_posts.all().order_by('-id')
+    return render(request, 'accounts/myscrap.html', {'scrap_posts':scrap_posts})
