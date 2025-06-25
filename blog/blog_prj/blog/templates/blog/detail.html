@@ -13,6 +13,15 @@
     <p>작성일 - {{ post.created_at }}</p>
     <p>작성자 - {{ post.author.nickname }}</p>
 
+    {% if post.image %}
+      <img width="320" height="240" src="{{post.image.url}}">
+    {% endif %}
+    {% if post.video %}
+      <video width="320" height="240" controls>
+        <source src="{{post.video.url}}" type="video/mp4">
+      </video>
+    {% endif %}
+
     <p>좋아요 : {{post.like.count}} <br>
       {% if request.user in post.like.all %}
         <a href="{% url 'blog:like' post.id %}">좋아요 취소</a>

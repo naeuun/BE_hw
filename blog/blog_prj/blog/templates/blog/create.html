@@ -7,10 +7,12 @@
   </head>
   <body>
     <h2>글 작성</h2>
-    <form method="POST" action="{% url 'blog:create' %}">
+    <form method="POST" action="{% url 'blog:create' %}" enctype="multipart/form-data">
       {% csrf_token %} 
       제목  <input type="text" name="title" /><br /><br />
       내용  <textarea name="content"></textarea><br /><br />
+      이미지 - <input type="file" name="image" /><br><br>
+      동영상 - <input type="file" name="video" /><br><br>
 
       카테고리
       <select name="category" multiple>
