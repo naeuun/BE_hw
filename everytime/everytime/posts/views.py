@@ -24,7 +24,7 @@ def create_comment(request, id):
             post=post,
             content=content,
             author=request.user,
-            is_anonymous = is_anonymous
+            is_anonymous = is_anonymous,
         )   
         return redirect('posts:detail', id)
     return redirect('posts:main')
@@ -36,6 +36,17 @@ def update(request, id):
         post.title = request.POST.get('title')
         post.content = request.POST.get('content')
         post.is_anonymous = request.POST.get('is_anonymous') =='on'
+        image = request.FILES.get('image')
+        video = request.FILES.get('video')
+        
+        if image:
+            post.image.delete()
+            post.image = image
+        
+        if video:
+            post.video.delete()
+            post.video = video
+            
         post.save()
         return redirect('posts:detail', id)
     return render(request, 'posts/update.html', {'post':post})
@@ -59,12 +70,16 @@ def category(request, slug):
         title = request.POST.get('title')
         content = request.POST.get('content')
         is_anonymous = request.POST.get('is_anonymous') == 'on'
+        image = request.FILES.get('image')
+        video = request.FILES.get('video')
         
         post = Post.objects.create(
             title = title,
             content = content,
             is_anonymous = is_anonymous,
-            author=request.user
+            author=request.user,
+            image = image,
+            video = video
         )
         
         post.category.add(category)

@@ -1,4 +1,5 @@
 {% load humanize %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,10 +16,14 @@
         <a href="{% url 'accounts:mypage' %}">마이페이지</a>
         <a href="{% url 'accounts:logout' %}">로그아웃</a><hr>
 
-        <form method="POST" action="{% url 'posts:category' category.slug %}">
+        <h2>{{category.name}}</h2>
+
+        <form method="POST" action="{% url 'posts:category' category.slug %}" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="text" name="title" placeholder="제목 입력"><br>
             <textarea name="content" placeholder="본문 입력"></textarea><br><br><br>
+            이미지 <input type="file" name="image" /><br><br>
+            동영상 <input type="file" name="video" /><br><br>
             <input type="checkbox" name="is_anonymous">익명
             <button type="submit">작성 완료</button>    
         </form><hr>
@@ -33,6 +38,7 @@
         <h2><a href="{% url 'posts:detail' post.id %}">{{ post.title }}</a></h2>
         <p>{{ post.content }}</p>
         <p>{{ post.created_at|naturaltime }}</p>
+        <p> 댓글 {{ post.comments.count }} 공감 {{ post.post_likes.count }} </p>
         <hr>
     {% empty %}
         글이 없습니다
