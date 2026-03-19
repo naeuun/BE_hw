@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>당신이 입력한 텍스트는 <!-- 단어 수 --> 단어로 구성되어 있습니다.</h1>
+
+    <h1>입력한 텍스트 : </h1>
+    {{ alltext }}
+
+    <h1>단어별 빈도수</h1>
+    {% for word, frequency in dictionary %}
+        <li>{{ word }}: {{ frequency }}</li>
+    {% endfor %}
+
+    <a href="{% url 'wordcount:word_count' %}">다시하기</a>
+</body>
+</html>
